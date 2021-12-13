@@ -1,0 +1,45 @@
+server:
+  port: 9003
+
+spring:
+  application:
+    name: order-production
+  datasource:
+    url: jdbc:mysql://pizzastorm-productionqueue.mysql.database.azure.com:3306/production_queue
+    username: pizzaprod@pizzastorm-productionqueue
+    password: hitsYoureye0
+    driver-class-name: com.mysql.cj.jdbc.Driver  
+  profiles:
+    active: prod
+  cloud:
+    azure:
+      servicebus:
+        connection-string: Endpoint=sb://pizzastorm.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=yoVSXpqHPLi0RNFCi0xig8Pj5SZ84OZIydpnTmWsddI=
+    stream:
+      bindings:
+        newOrderConsumer-in-0:
+          destination: order.created
+          group: OrderProduction
+        producedOrderPublisher-out-0:
+          destination: order.produced
+      function:
+        definition: newOrderConsumer;producedOrderPublisher;
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka:8761/eureka/
+  instance:
+    prefer-ip-address: true
+
+frontend:
+  url: http://pizzastorm-makeline.azurewebsites.net/
+
+
+
+  
+

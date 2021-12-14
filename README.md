@@ -1,6 +1,4 @@
-# Project 3: 
-
-# Order Production 
+# Order Production System
 
 Order Production is the Java backend of SkillStorm Project 3 'PizzaStorm'. 
 Ran with [Spring Boot](http://projects.spring.io/spring-boot/).
